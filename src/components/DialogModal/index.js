@@ -49,7 +49,6 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
           style={{
             height:'80vh',
             overflowY:'scroll',
-            //width:'calc(100% - 160px)',
             padding:'15px'
           }}
         >
@@ -64,17 +63,38 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                     margin:'15px 0'
                   }}
                 >
-                  <img
-                    src={`./assets/${avatar}`}
-                    alt='avatar'
+                  {alignment === 'left' && (
+                    <img
+                      src={`./assets/${avatar}`}
+                      alt='avatar'
+                      style={{
+                        minWidth:'120px',
+                        imageRendering:'pixelated',
+                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                      }}
+                    />
+                  )}
+                  <div
+                    class={`nes-balloon from-${alignment}`}
                     style={{
-                      ...styles.avatar,
-                      float:alignment
+                      width:'calc(100% - 160px)'
                     }}
-                  />
-                  <div style={{ ...styles.speechBubble }}>
-                    {text}
+                  >
+                    <p>
+                      {text}
+                    </p>
                   </div>
+                  {alignment === 'right' && (
+                    <img
+                      src={`./assets/${avatar}`}
+                      alt='avatar'
+                      style={{
+                        minWidth:'120px',
+                        imageRendering:'pixelated',
+                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                      }}
+                    />
+                  )}
                 </div>
               )
             }
