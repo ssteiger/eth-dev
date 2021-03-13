@@ -5,7 +5,7 @@
 }
 
 #terminal.close {
-  top: calc(100vh - 180px);
+  top: calc(100vh - 200px);
   height: 0;
 }
 

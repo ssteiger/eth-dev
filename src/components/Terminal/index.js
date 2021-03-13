@@ -11,8 +11,7 @@ const styles = {
   position:'fixed',
   bottom:0,
   left:0,
-  //right:0,
-  pointerEvents:'none',
+  //pointerEvents:'none',
   height:'600px',
   width:'250px',
   background:'url(./assets/terminal.png)',
@@ -22,13 +21,18 @@ const styles = {
   zIndex:1000
 }
 
-const Terminal = ({ ringing, visible,  actions }) => {
+const Terminal = ({ ringing, visible, actions }) => {
 
-  console.log({ ringing, visible })
+  const toggleVisiblity = () => {
+    actions.toggleVisiblity()
+    $('#terminal').toggleClass('close').promise().done(() => {
+      console.log('effect done')
+    })
+  }
 
   useEffect(() => {
     if (ringing) {
-      new Typewriter('#terminal > .terminal-bubble', {
+      new Typewriter('#terminal > .nes-balloon', {
         strings: ['Incoming call ...'],
         cursor: '',
         autoStart: true,
@@ -43,16 +47,28 @@ const Terminal = ({ ringing, visible,  actions }) => {
     <div
       id='terminal'
       onClick={() => {
-        actions.toggleVisiblity()
-        $('#terminal').toggleClass('close').promise().done(() => {
-          actions.setCurrentDialog({ name: 'welcomeCall' })
-        })
+        if (!(ringing && visible)) {
+          toggleVisiblity()
+        }
+        if (ringing) {
+          actions.toggleRinging()
+        }
       }}
       className='close'
       style={{ ...styles }}
     >
-      {ringing && !visible && (
-        <div className='terminal-bubble'>
+      {ringing && (
+        <div
+          class={`nes-balloon from-left`}
+          style={{
+            width:'100%',
+            marginLeft:'60px'
+          }}
+          onClick={() => {
+            actions.toggleVisiblity()
+            actions.setCurrentDialog({ name: 'welcomeCall' })
+          }}
+        >
           <Typist
             cursor={{ show: false }}
             avgTypingDelay={50}
@@ -60,8 +76,8 @@ const Terminal = ({ ringing, visible,  actions }) => {
           >
             Incoming transmission ...
           </Typist>
-        </div>)
-      }
+        </div>
+      )}
     </div>
   )
 }
