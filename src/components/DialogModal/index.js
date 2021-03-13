@@ -49,7 +49,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
           style={{
             height:'80vh',
             overflowY:'scroll',
-            width:'calc(100% - 160px)',
+            //width:'calc(100% - 160px)',
             padding:'15px'
           }}
         >
@@ -57,7 +57,13 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
             const { avatar, alignment, text } = dialog
             if (index <= currentDialog.index) {
               return (
-                <div style={{ float:alignment, width:'100%', margin:'15px 0' }}>
+                <div
+                  style={{
+                    float:alignment,
+                    width:'100%',
+                    margin:'15px 0'
+                  }}
+                >
                   <img
                     src={`./assets/${avatar}`}
                     alt='avatar'
@@ -66,7 +72,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                       float:alignment
                     }}
                   />
-                  <div style={{  ...styles.speechBubble }}>
+                  <div style={{ ...styles.speechBubble }}>
                     {text}
                   </div>
                 </div>

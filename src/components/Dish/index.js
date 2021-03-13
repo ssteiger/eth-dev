@@ -8,15 +8,15 @@ import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 import './styles.css'
 
 const styles = {
-  display:'none',
+  //display:'none',
   position:'fixed',
-  bottom: '30vh',
-  right:0,
-  pointerEvents:'none',
-  height:'25vh',
+  top:0,
+  left:0,
+  height:'100%',
   width:'100%',
-  //background:'url(./assets/dish.png)',
-  //backgroundSize:'cover',
+  pointerEvents:'none',
+  background:'url(./assets/dish.png) no-repeat bottom right fixed',
+  backgroundSize:'contain',
   cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
   imageRendering:'pixelated',
   zIndex:1000
@@ -39,33 +39,20 @@ const Dish = ({ ringing, visible,  actions }) => {
   return (
     <div
       id='dish'
-      onClick={() => {
-        console.log('click')
-      }}
       className='close'
       style={{ ...styles }}
     >
-      <img
-        src='./assets/dish.png'
-        style={{
-          //float:'left',
-          width:'100%',
-          imageRendering: 'pixelated'
-        }}
-        alt='dish'
-      />
-
-      {ringing && !visible && (
-        <div className='dish-bubble'>
-          <Typist
-            cursor={{ show: false }}
-            avgTypingDelay={50}
-            loop={true}
-          >
-            Connecting ...
-          </Typist>
-        </div>)
-      }
+      {/*
+      <div className='dish-bubble'>
+        <Typist
+          cursor={{ show: false }}
+          avgTypingDelay={50}
+          loop={true}
+        >
+          Connecting ...
+        </Typist>
+      </div>
+      */}
     </div>
   )
 }
