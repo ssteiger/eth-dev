@@ -127,7 +127,7 @@ const Toolbelt = ({ visible, actions }) => {
         className='icon'
         role='button'
         onClick={() => {
-          actions.toggleVisibility()
+          actions.toggleTerminalVisibility()
         }}
         style={{
           ...styles.shared.icon,
