@@ -72,7 +72,6 @@ const Terminal = ({ ringing, visible, actions }) => {
             marginLeft:'60px'
           }}
           onClick={() => {
-            actions.toggleVisibility()
             actions.setCurrentDialog({ name: 'welcomeCall' })
           }}
         >
