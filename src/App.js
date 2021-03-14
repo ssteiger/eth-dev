@@ -8,16 +8,12 @@ import Toolbelt from './components/Toolbelt'
 import Dish from './components/Dish'
 import DialogModal from './components/DialogModal/index'
 
-//const mydialogue = require('dialoguejs')
-
-const styles = {}
-
 const store = configureStore()
 
 const App = () => {
   return (
     <ReduxProvider store={store} key='reduxProvider'>
-      <div id='container'>
+      <div id='App'>
 
         <Background />
 

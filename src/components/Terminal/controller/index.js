@@ -33,7 +33,7 @@ const reducer = (state = initialState, action) => {
 }
 
 const actionCreators = {
-  toggleVisiblity: () => ({
+  toggleVisibility: () => ({
     type: TOGGLE_VISIBLITY
   }),
   toggleRinging: () => ({
@@ -42,8 +42,8 @@ const actionCreators = {
 }
 
 const dispatchers = {
-  toggleVisiblity: () => {
-    return actionCreators.toggleVisiblity()
+  toggleVisibility: () => {
+    return actionCreators.toggleVisibility()
   },
   toggleRinging: () => {
     return actionCreators.toggleRinging()
@@ -52,8 +52,8 @@ const dispatchers = {
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    toggleVisiblity() {
-      dispatch(actionCreators.toggleVisiblity())
+    toggleVisibility() {
+      dispatch(actionCreators.toggleVisibility())
     },
     toggleRinging() {
       dispatch(actionCreators.toggleRinging())

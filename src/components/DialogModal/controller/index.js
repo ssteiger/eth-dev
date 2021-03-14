@@ -1,7 +1,6 @@
-import dotProp from 'dot-prop-immutable'
 import deepcopy from 'deepcopy'
-import * as merge from 'deepmerge'
 import { actionCreators as terminalActionCreators } from '../../Terminal/controller'
+import { actionCreators as toolbeltActionCreators } from '../../Toolbelt/controller'
 
 export const TOGGLE_DIALOG_VISIBILITY = 'dialogModal/TOGGLE_DIALOG_VISIBILITY'
 export const CURRENT_DIALOG_SET = 'dialogModal/CURRENT_DIALOG_SET'
@@ -140,6 +139,9 @@ const mapDispatchToProps = dispatch => ({
     },
     toggleRinging() {
       dispatch(terminalActionCreators.toggleRinging())
+    },
+    toggleToolbeltVisibility() {
+      dispatch(toolbeltActionCreators.toggleVisibility())
     }
   }
 })

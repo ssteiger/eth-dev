@@ -1,11 +1,11 @@
 import dotProp from 'dot-prop-immutable'
 
 export const TOGGLE_VISIBLITY = 'dish/TOGGLE_VISIBLITY'
-export const TOGGLE_RINGING = 'dish/TOGGLE_RINGING'
+export const TOGGLE_CONNECTING = 'dish/TOGGLE_CONNECTING'
 
 const initialState = {
-  visible: true,
-  ringing: false
+  visible: false,
+  connecting: false
 }
 
 const mapStateToProps = state => {
@@ -22,8 +22,8 @@ const reducer = (state = initialState, action) => {
     case TOGGLE_VISIBLITY:
       newState.visible = !state.visible
       return newState
-    case TOGGLE_RINGING:
-      newState.ringing = !state.ringing
+    case TOGGLE_CONNECTING:
+      newState.connecting = !state.connecting
       return newState
     default:
       return newState
@@ -31,30 +31,30 @@ const reducer = (state = initialState, action) => {
 }
 
 const actionCreators = {
-  toggleVisiblity: () => ({
+  toggleVisibility: () => ({
     type: TOGGLE_VISIBLITY
   }),
-  toggleRinging: () => ({
-    type: TOGGLE_RINGING
+  toggleConnecting: () => ({
+    type: TOGGLE_CONNECTING
   })
 }
 
 const dispatchers = {
-  toggleVisiblity: () => {
-    return actionCreators.toggleVisiblity()
+  toggleVisibility: () => {
+    return actionCreators.toggleVisibility()
   },
-  toggleRinging: () => {
-    return actionCreators.toggleRinging()
+  toggleConnecting: () => {
+    return actionCreators.toggleConnecting()
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    toggleVisiblity() {
-      dispatch(actionCreators.toggleVisiblity())
+    toggleVisibility() {
+      dispatch(actionCreators.toggleVisibility())
     },
-    toggleRinging() {
-      dispatch(actionCreators.toggleRinging())
+    toggleConnecting() {
+      dispatch(actionCreators.toggleConnecting())
     }
   }
 })

@@ -1,4 +1,5 @@
-import dotProp from 'dot-prop-immutable'
+import { actionCreators as terminalActionCreators } from '../../Terminal/controller'
+import { actionCreators as dishActionCreators } from '../../Dish/controller'
 
 export const TOGGLE_VISIBLITY = 'toolbelt/TOGGLE_VISIBLITY'
 
@@ -27,21 +28,27 @@ const reducer = (state = initialState, action) => {
 }
 
 const actionCreators = {
-  toggleVisiblity: () => ({
+  toggleVisibility: () => ({
     type: TOGGLE_VISIBLITY
   })
 }
 
 const dispatchers = {
-  toggleVisiblity: () => {
-    return actionCreators.toggleVisiblity()
+  toggleVisibility: () => {
+    return actionCreators.toggleVisibility()
   }
 }
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    toggleVisiblity() {
-      dispatch(actionCreators.toggleVisiblity())
+    toggleVisibility() {
+      dispatch(actionCreators.toggleVisibility())
+    },
+    toggleDishVisibility() {
+      dispatch(dishActionCreators.toggleVisibility())
+    },
+    toggleTerminalVisibility() {
+      dispatch(terminalActionCreators.toggleVisibility())
     }
   }
 })

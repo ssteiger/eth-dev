@@ -1,15 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'antd'
 import $ from 'jquery'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 
 const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
 
+  /*
   console.log('in DialogModal')
   console.log({ name: currentDialog.name })
   console.log({ currentIndex: currentDialog.index })
   console.log({ length: dialogs[currentDialog.name].length })
+  */
+
+  const scrollToBottom = (element) => {
+    $(element).animate({ scrollTop: $(document).height() }, 'slow')
+  }
 
   // TODO: move this into reducer
   const isEndOfDialog = dialogs[currentDialog.name].length - 1 === currentDialog.index
@@ -22,8 +27,6 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
         left:'20%',
         right:'20%',
         height:'90vh',
-        //backgroundColor: '#fff',
-        //backgroundSize:'cover',
         zIndex:100
       }}
     >
@@ -59,7 +62,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                     />
                   )}
                   <div
-                    class={`nes-balloon from-${alignment}`}
+                    className={`nes-balloon from-${alignment}`}
                     style={{
                       width:'calc(100% - 160px)'
                     }}
@@ -87,7 +90,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
           (
             <button
               type='button'
-              class='nes-btn'
+              className='nes-btn'
               id='confirmButton'
               onClick={() => {
                 if (isEndOfDialog) {
@@ -96,9 +99,6 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                 }
                 if (!isEndOfDialog) {
                   actions.continueCurrentDialog()
-                }
-                const scrollToBottom = (element) => {
-                  $(element).animate({ scrollTop: $(document).height() }, 'slow')
                 }
                 scrollToBottom('#speechContainer')
               }}
@@ -112,12 +112,10 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
             currentDialog.name === 'welcomeCall' && isEndOfDialog && (
               <button
                 type='button'
-                class='nes-btn is-warning'
+                className='nes-btn is-warning'
                 onClick={() => {
                   actions.toggleDialogVisibility()
-                  $('#toolbelt').show('slow').promise().done(() => {
-                    $('#dish').show('slow')
-                  })
+                  actions.toggleToolbeltVisibility()
                 }}
                 style={{ float: 'right' }}
               >
