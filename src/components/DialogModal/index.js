@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import $ from 'jquery'
+import { CodeContainer } from './components'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 
 const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
