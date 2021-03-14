@@ -50,7 +50,7 @@ const initialState = {
       {
         avatar: 'punk_anon.png',
         alignment: 'right',
-        text:  'Listen - We need your help.'
+        text: 'Listen - We need your help.'
       },
       {
         avatar: 'punk_anon.png',
@@ -65,7 +65,7 @@ const initialState = {
       {
         avatar: 'punk5950.png',
         alignment: 'left',
-        text: 'Ok, no problem.'
+        text: 'Sure'
       }
     ]
   }
