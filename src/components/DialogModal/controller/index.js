@@ -1,4 +1,5 @@
 import deepcopy from 'deepcopy'
+import dialogs from '../model/dialogs.json';
 import { actionCreators as terminalActionCreators } from '../../Terminal/controller'
 import { actionCreators as toolbeltActionCreators } from '../../Toolbelt/controller'
 
@@ -14,60 +15,7 @@ const initialState = {
     index: 0
   },
   dialogs: {
-    intro: [
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text: `It's been a long time...`
-      },
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text:  'Crypto City.'
-      },
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text: `Where the central headquarter of the byzantine generals, NFT addicts and some of the largest mining districts in the world live side by side.`
-      },
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text: 'Feels good to be back...'
-      },
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text: 'Feels like home...'
-      },
-    ],
-    welcomeCall: [
-      {
-        avatar: 'punk_anon.png',
-        alignment: 'right',
-        text: 'Hey! I heard you where back in town...'
-      },
-      {
-        avatar: 'punk_anon.png',
-        alignment: 'right',
-        text: 'Listen - We need your help.'
-      },
-      {
-        avatar: 'punk_anon.png',
-        alignment: 'right',
-        text: 'The byzantine generals are out of their minds!'
-      },
-      {
-        avatar: 'punk_anon.png',
-        alignment: 'right',
-        text: 'Can you connect to the city network?'
-      },
-      {
-        avatar: 'punk5950.png',
-        alignment: 'left',
-        text: 'Sure'
-      }
-    ]
+    ...dialogs
   }
 }
 
