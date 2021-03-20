@@ -1,4 +1,11 @@
-# eth-dev mvp
+# ETH DEV [mvp]
+
+## Getting started
+
+```bash
+# start app
+yarn start
+```
 
 ## Using
 
