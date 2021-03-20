@@ -10,53 +10,53 @@ import './styles.css'
 const styles = {
   display:'none',
   position:'fixed',
-  bottom: '30vh',
-  right:0,
-  pointerEvents:'none',
-  height:'25vh',
+  top:0,
+  left:0,
+  height:'100%',
   width:'100%',
-  //background:'url(./assets/dish.png)',
-  //backgroundSize:'cover',
+  pointerEvents:'none',
+  background:'url(./assets/layers/dish.png) no-repeat bottom right fixed',
+  backgroundSize:'contain',
   cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
   imageRendering:'pixelated',
   zIndex:1000
 }
 
-const Dish = ({ ringing, visible,  actions }) => {
+const Dish = ({ connecting, visible, actions }) => {
+  const activateConnectiongAnimation = () => {
+    new Typewriter('#dish > .dish-bubble', {
+      strings: ['Connecting ...'],
+      cursor: '',
+      autoStart: true,
+      loop: true,
+      delay: 90, // delay between each key when typing
+      deleteSpeed: 10
+    })
+  }
+
   useEffect(() => {
-    if (ringing) {
-      new Typewriter('#dish > .dish-bubble', {
-        strings: ['Connecting ...'],
-        cursor: '',
-        autoStart: true,
-        loop: true,
-        delay: 90, // delay between each key when typing
-        deleteSpeed: 10
-      })
+    if (connecting) {
+      activateConnectiongAnimation()
     }
-  }, [ringing])
+  }, [connecting])
 
   return (
     <div
       id='dish'
-      onClick={() => {
-        console.log('click')
-      }}
       className='close'
-      style={{ ...styles }}
+      style={{
+        ...styles,
+        display: visible ? 'block' : 'none',
+      }}
     >
-      <img
-        src='./assets/dish.png'
-        style={{
-          //float:'left',
-          width:'100%',
-          imageRendering: 'pixelated'
-        }}
-        alt='dish'
-      />
-
-      {ringing && !visible && (
-        <div className='dish-bubble'>
+      {connecting && (
+        <div
+          className={`nes-balloon from-left`}
+          style={{
+            width:'100%',
+            marginRight:'60px'
+          }}
+        >
           <Typist
             cursor={{ show: false }}
             avgTypingDelay={50}
@@ -64,8 +64,8 @@ const Dish = ({ ringing, visible,  actions }) => {
           >
             Connecting ...
           </Typist>
-        </div>)
-      }
+        </div>
+      )}
     </div>
   )
 }

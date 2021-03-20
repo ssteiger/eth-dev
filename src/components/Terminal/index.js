@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'antd'
-import $ from 'jquery'
 import Typist from 'react-typist'
 import Typewriter from 'typewriter-effect/dist/core'
+import $ from 'jquery'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 import './styles.css'
 
@@ -11,31 +10,41 @@ const styles = {
   position:'fixed',
   bottom:0,
   left:0,
-  //right:0,
-  pointerEvents:'none',
+  //pointerEvents:'none',
   height:'600px',
-  width:'250px',
-  background:'url(./assets/terminal.png)',
+  width:'302px',
+  background:'url(./assets/trimmed/terminal_trimmed.png)',
   backgroundSize:'cover',
   cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
   imageRendering:'pixelated',
-  zIndex:1000
+  zIndex:1050
 }
 
-const Terminal = ({ ringing, visible,  actions }) => {
+const Terminal = ({ ringing, visible, actions }) => {
+  const toggleVisibility = () => {
+    $('#terminal').toggleClass('close').promise().done(() => {
+      console.log('effect done')
+    })
+  }
 
-  console.log({ ringing, visible })
+  const activateRingingAnimation = () => {
+    new Typewriter('#terminal > .nes-balloon', {
+      strings: ['Incoming call ...'],
+      cursor: '',
+      autoStart: true,
+      loop: true,
+      delay: 90, // delay between each key when typing
+      deleteSpeed: 10
+    })
+  }
+
+  useEffect(() => {
+    toggleVisibility()
+  }, [visible])
 
   useEffect(() => {
     if (ringing) {
-      new Typewriter('#terminal > .terminal-bubble', {
-        strings: ['Incoming call ...'],
-        cursor: '',
-        autoStart: true,
-        loop: true,
-        delay: 90, // delay between each key when typing
-        deleteSpeed: 10
-      })
+      activateRingingAnimation()
     }
   }, [ringing])
 
@@ -43,16 +52,29 @@ const Terminal = ({ ringing, visible,  actions }) => {
     <div
       id='terminal'
       onClick={() => {
-        actions.toggleVisiblity()
-        $('#terminal').toggleClass('close').promise().done(() => {
-          actions.setCurrentDialog({ name: 'welcomeCall' })
-        })
+        if (!ringing) {
+          actions.toggleVisibility()
+        }
+        if (ringing) {
+          actions.toggleRinging()
+        }
+        if (ringing && !visible) {
+          actions.toggleVisibility()
+        }
       }}
-      className='close'
       style={{ ...styles }}
     >
-      {ringing && !visible && (
-        <div className='terminal-bubble'>
+      {ringing && (
+        <div
+          className={`nes-balloon from-left`}
+          style={{
+            width:'100%',
+            marginLeft:'60px'
+          }}
+          onClick={() => {
+            actions.setCurrentDialog({ name: 'welcomeCall' })
+          }}
+        >
           <Typist
             cursor={{ show: false }}
             avgTypingDelay={50}
@@ -60,8 +82,8 @@ const Terminal = ({ ringing, visible,  actions }) => {
           >
             Incoming transmission ...
           </Typist>
-        </div>)
-      }
+        </div>
+      )}
     </div>
   )
 }

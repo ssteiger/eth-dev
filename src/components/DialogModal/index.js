@@ -1,33 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Button } from 'antd'
 import $ from 'jquery'
+import { CodeContainer } from './components'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
-import './styles.css'
-
-const styles = {
-  avatar: {
-    float:'left',
-    width:'120px',
-    imageRendering: 'pixelated'
-  },
-  speechBubble: {
-    float:'left',
-    width:'calc(100% - 120px)',
-    backgroundColor:'#fff',
-    padding:'10px',
-    lineHeight:'2em',
-    boxShadow:'0 -4px #fff, 0 -8px #212529, 4px 0 #fff, 4px -4px #212529, 8px 0 #212529, 0 4px #fff, 0 8px #212529, -4px 0 #fff, -4px 4px #212529, -8px 0 #212529, -4px -4px #212529, 4px 4px #212529',
-  }
-}
 
 const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
 
+  /*
   console.log('in DialogModal')
   console.log({ name: currentDialog.name })
   console.log({ currentIndex: currentDialog.index })
   console.log({ length: dialogs[currentDialog.name].length })
+  */
 
+  const scrollToBottom = (element) => {
+    $(element).animate({ scrollTop: $(document).height() }, 'slow')
+  }
+
+  // TODO: move this into reducer
   const isEndOfDialog = dialogs[currentDialog.name].length - 1 === currentDialog.index
 
   return (
@@ -38,18 +28,15 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
         left:'20%',
         right:'20%',
         height:'90vh',
-        //backgroundColor: '#fff',
-        //backgroundSize:'cover',
         zIndex:100
       }}
     >
       {dialogVisible && (
         <div
-          id='speech-container'
+          id='speechContainer'
           style={{
             height:'80vh',
             overflowY:'scroll',
-            width:'calc(100% - 160px)',
             padding:'15px'
           }}
         >
@@ -57,52 +44,85 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
             const { avatar, alignment, text } = dialog
             if (index <= currentDialog.index) {
               return (
-                <div style={{ float:alignment, width:'100%', margin:'15px 0' }}>
-                  <img
-                    src={`./assets/${avatar}`}
-                    alt='avatar'
+                <div
+                  style={{
+                    float:alignment,
+                    width:'100%',
+                    margin:'15px 0'
+                  }}
+                >
+                  {alignment === 'left' && (
+                    <img
+                      src={`./assets/${avatar}`}
+                      alt='avatar'
+                      style={{
+                        minWidth:'120px',
+                        imageRendering:'pixelated',
+                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                      }}
+                    />
+                  )}
+                  <div
+                    className={`nes-balloon from-${alignment}`}
                     style={{
-                      ...styles.avatar,
-                      float:alignment
+                      width:'calc(100% - 160px)'
                     }}
-                  />
-                  <div style={{  ...styles.speechBubble }}>
-                    {text}
+                  >
+                    <p>
+                      {text}
+                    </p>
                   </div>
+                  {alignment === 'right' && (
+                    <img
+                      src={`./assets/${avatar}`}
+                      alt='avatar'
+                      style={{
+                        minWidth:'120px',
+                        imageRendering:'pixelated',
+                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                      }}
+                    />
+                  )}
                 </div>
               )
             }
           })}
           {!(currentDialog.name === 'welcomeCall' && isEndOfDialog) &&
           (
-            <Button
+            <button
+              type='button'
+              className='nes-btn'
               id='confirmButton'
               onClick={() => {
                 if (isEndOfDialog) {
                   actions.toggleRinging()
                   actions.toggleDialogVisibility()
-                } else {
+                }
+                if (!isEndOfDialog) {
                   actions.continueCurrentDialog()
                 }
-              }}
-            >
-              Continue ...
-            </Button>
-          )}
-
-          {
-            currentDialog.name === 'welcomeCall' && isEndOfDialog &&
-            <Button
-              onClick={() => {
-                actions.toggleDialogVisibility()
-                $('#toolbelt').show('slow').promise().done(() => {
-                   $('#dish').show('slow')
-                })
+                scrollToBottom('#speechContainer')
               }}
               style={{ float: 'right' }}
             >
-              Setup network dish
-            </Button>
+              Continue ...
+            </button>
+          )}
+
+          {
+            currentDialog.name === 'welcomeCall' && isEndOfDialog && (
+              <button
+                type='button'
+                className='nes-btn is-warning'
+                onClick={() => {
+                  actions.toggleDialogVisibility()
+                  actions.toggleToolbeltVisibility()
+                }}
+                style={{ float: 'right' }}
+              >
+                Setup network dish
+              </button>
+            )
           }
         </div>
       )}
