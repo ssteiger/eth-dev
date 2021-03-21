@@ -4,6 +4,7 @@ import configureStore from './redux/configureStore'
 
 import Background from './components/Background'
 import Terminal from './components/Terminal'
+import Wallet from './components/Wallet'
 import Toolbelt from './components/Toolbelt'
 import Dish from './components/Dish'
 import DialogModal from './components/DialogModal/index'
@@ -20,6 +21,8 @@ const App = () => {
         <DialogModal />
 
         <Terminal />
+
+        <Wallet />
 
         <Dish />
 
