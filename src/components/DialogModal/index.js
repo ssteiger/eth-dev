@@ -14,7 +14,8 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
   */
 
   const scrollToBottom = (element) => {
-    $(element).animate({ scrollTop: $(document).height() }, 'slow')
+    const { scrollHeight } = $(element)[0]
+    $(element).animate({ scrollTop: scrollHeight }, 'slow')
   }
 
   // TODO: move this into reducer
