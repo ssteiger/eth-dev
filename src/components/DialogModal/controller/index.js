@@ -1,5 +1,5 @@
 import deepcopy from 'deepcopy'
-import dialogs from '../model/dialogs.json';
+import dialogs from '../model/dialogs.js';
 import { actionCreators as terminalActionCreators } from '../../Terminal/controller'
 import { actionCreators as toolbeltActionCreators } from '../../Toolbelt/controller'
 
@@ -10,8 +10,7 @@ export const CURRENT_DIALOG_CONTINUE = 'dialogModal/CURRENT_DIALOG_CONTINUE'
 const initialState = {
   dialogVisible: true,
   currentDialog: {
-    name: 'intro',
-    //name: 'welcomeCall',
+    name: 'underflowLevel',
     index: 0
   },
   dialogs: {

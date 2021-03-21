@@ -41,7 +41,10 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
           }}
         >
           {dialogs[currentDialog.name].map((dialog, index) => {
-            const { avatar, alignment, text } = dialog
+            const { avatar, alignment, text, code, choices } = dialog
+
+            const isLastVisibleDialog = index === currentDialog.index
+
             if (index <= currentDialog.index) {
               return (
                 <div
@@ -58,7 +61,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                       style={{
                         minWidth:'120px',
                         imageRendering:'pixelated',
-                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                        transform:'scaleX(1)'
                       }}
                     />
                   )}
@@ -70,6 +73,9 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                   >
                     <p>
                       {text}
+                      {code && (
+                        <CodeContainer language={'bash'} children={code} />
+                      )}
                     </p>
                   </div>
                   {alignment === 'right' && (
@@ -79,50 +85,49 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                       style={{
                         minWidth:'120px',
                         imageRendering:'pixelated',
-                        transform:alignment === 'right' ? 'scaleX(-1)' : 'scaleX(1)'
+                        transform:'scaleX(-1)'
                       }}
                     />
                   )}
+
+                  {isLastVisibleDialog && choices && choices.length && (
+                    choices.map(choice => {
+                      return (
+                        <button
+                          type='button'
+                          className='nes-btn is-warning'
+                          id={choice.id}
+                          onClick={() => {
+                            actions.continueCurrentDialog()
+                            scrollToBottom('#speechContainer')
+                          }}
+                          style={{ float: 'right' }}
+                        >
+                          {choice.buttonText}
+                        </button>
+                      )
+                    })
+                  )}
+                  {
+                    isLastVisibleDialog && !choices && (
+                      <button
+                        type='button'
+                        className='nes-btn'
+                        id='continue'
+                        onClick={() => {
+                          actions.continueCurrentDialog()
+                          scrollToBottom('#speechContainer')
+                        }}
+                        style={{ float: 'right' }}
+                      >
+                        Continue ...
+                      </button>
+                    )
+                  }
                 </div>
               )
             }
-          })}
-          {!(currentDialog.name === 'welcomeCall' && isEndOfDialog) &&
-          (
-            <button
-              type='button'
-              className='nes-btn'
-              id='confirmButton'
-              onClick={() => {
-                if (isEndOfDialog) {
-                  actions.toggleRinging()
-                  actions.toggleDialogVisibility()
-                }
-                if (!isEndOfDialog) {
-                  actions.continueCurrentDialog()
-                }
-                scrollToBottom('#speechContainer')
-              }}
-              style={{ float: 'right' }}
-            >
-              Continue ...
-            </button>
-          )}
-
-          {
-            currentDialog.name === 'welcomeCall' && isEndOfDialog && (
-              <button
-                type='button'
-                className='nes-btn is-warning'
-                onClick={() => {
-                  actions.toggleDialogVisibility()
-                  actions.toggleToolbeltVisibility()
-                }}
-                style={{ float: 'right' }}
-              >
-                Setup network dish
-              </button>
-            )
+          })
           }
         </div>
       )}
