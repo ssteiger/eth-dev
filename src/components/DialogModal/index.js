@@ -1,25 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import $ from 'jquery'
-import { CodeContainer } from './components'
+import { CodeContainer } from './views'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 
-const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
+const styles = {
+  button: {
+    float:'right',
+    width:'80%',
+    marginTop:'30px',
+    marginLeft:'15%',
+    marginRight:'10%'
+  }
+}
 
-  /*
-  console.log('in DialogModal')
-  console.log({ name: currentDialog.name })
-  console.log({ currentIndex: currentDialog.index })
-  console.log({ length: dialogs[currentDialog.name].length })
-  */
+const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
 
   const scrollToBottom = (element) => {
     const { scrollHeight } = $(element)[0]
     $(element).animate({ scrollTop: scrollHeight }, 'slow')
   }
 
-  // TODO: move this into reducer
-  const isEndOfDialog = dialogs[currentDialog.name].length - 1 === currentDialog.index
+  useEffect(() => {
+    $('#check-for-sites').click(() => {
+      console.log('click and show user interface now')
+      actions.setToolbeltVisibility({ visible: true })
+    })
+  }, [currentDialog, actions])
+
+  console.log({ dialogs })
+  console.log({ currentDialog })
 
   return (
     <div
@@ -69,7 +79,8 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                   <div
                     className={`nes-balloon from-${alignment}`}
                     style={{
-                      width:'calc(100% - 160px)'
+                      width:'calc(100% - 160px)',
+                      lineHeight:'30px'
                     }}
                   >
                     <p>
@@ -99,10 +110,15 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                           className='nes-btn is-warning'
                           id={choice.id}
                           onClick={() => {
-                            actions.continueCurrentDialog()
+                            if (choice.goToDialog) {
+                              console.log('now going to dialog: ' + choice.goToDialog)
+                              actions.setCurrentDialog({ name: choice.goToDialog })
+                            } else {
+                              actions.continueCurrentDialog()
+                            }
                             scrollToBottom('#speechContainer')
                           }}
-                          style={{ float: 'right' }}
+                          style={{ ...styles.button }}
                         >
                           {choice.buttonText}
                         </button>
@@ -119,7 +135,7 @@ const DialogModal = ({ dialogVisible, dialogs, currentDialog, actions }) => {
                           actions.continueCurrentDialog()
                           scrollToBottom('#speechContainer')
                         }}
-                        style={{ float: 'right' }}
+                        style={{ ...styles.button }}
                       >
                         Continue ...
                       </button>
