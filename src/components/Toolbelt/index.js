@@ -4,6 +4,9 @@ import $ from 'jquery'
 import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 
 const styles = {
+  toolbelt: {
+    display:'none'
+  },
   shared: {
     menu: {
       position:'fixed',
@@ -17,8 +20,8 @@ const styles = {
       zIndex:1000
     },
     icon: {
-      position:'fixed',
-      bottom:'20px',
+      float:'left',
+      marginRight:'10px',
       imageRendering:'pixelated',
       cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
       zIndex:1000,
@@ -32,37 +35,44 @@ const styles = {
     background:'url(./assets/layers/menu_right.png) no-repeat bottom right fixed',
     backgroundSize:'contain'
   },
+  iconContainer: {
+    position:'fixed',
+    bottom:'5px',
+    height:'75px',
+    width:'100%',
+    zIndex:1000
+  },
+  iconContainerInner: {
+    height:'70px',
+    width: '500px',
+    margin: '0 auto'
+  },
   comIcon: {
-    right:'700px',
     height:'68px',
     width:'60px',
+    marginLeft:'20px',
     background:'url(./assets/trimmed/icons/com_icon_trimmed.png) no-repeat bottom left',
     backgroundSize:'cover'
   },
   terminalIcon: {
-    right:'calc(700px - 60px - 40px)',
     height:'61px',
     width:'78px',
     background:'url(./assets/trimmed/icons/terminal_icon_trimmed.png) no-repeat bottom left',
     backgroundSize:'cover'
   },
   walletIcon: {
-    right:'calc(700px - 180px - 40px)',
     height:'60px',
     width:'99px',
     background:'url(./assets/trimmed/icons/wallet_icon_trimmed.png) no-repeat bottom left',
     backgroundSize:'cover'
   },
   musicIcon: {
-    right:'calc(700px - 290px - 40px)',
     height:'57px',
     width:'88px',
     background:'url(./assets/trimmed/icons/music_icon_trimmed.png) no-repeat bottom left',
     backgroundSize:'cover'
-
   },
   dishIcon: {
-    right:'calc(700px - 375px - 40px)',
     height:'57px',
     width:'61px',
     background:'url(./assets/trimmed/icons/dish_icon_trimmed.png) no-repeat bottom left',
@@ -73,12 +83,12 @@ const styles = {
 const Toolbelt = ({ visible, actions }) => {
 
   const setIconHoverEffect = () => {
-    $('#toolbelt .icon').hover(
+    $('#toolbelt .iconContainer .icon').hover(
       function() {
-        $(this).css('bottom', '30px')
+        console.log('hover in')
       },
       function() {
-        $(this).css('bottom', '20px')
+        console.log('hover out')
       }
     )
   }
@@ -86,9 +96,6 @@ const Toolbelt = ({ visible, actions }) => {
   useEffect(() => {
     setIconHoverEffect()
   }, [])
-
-  console.log('Toolbelt:')
-  console.log({ visible })
 
   useEffect(() => {
     if (visible) {
@@ -104,9 +111,7 @@ const Toolbelt = ({ visible, actions }) => {
   return (
     <div
       id='toolbelt'
-      style={{
-        display:'none'
-      }}
+      style={{ ...styles.toolbelt }}
     >
       <div
         id='menuBottom'
@@ -123,65 +128,72 @@ const Toolbelt = ({ visible, actions }) => {
         }}
       />
       <div
-        id='comIcon'
-        className='icon'
-        role='button'
-        onClick={() => {
-          actions.toggleTerminalVisibility()
-        }}
-        style={{
-          ...styles.shared.icon,
-          ...styles.comIcon
-        }}
-      />
-      <div
-        id='terminalIcon'
-        className='icon'
-        role='button'
-        onClick={() => {
-          console.log('click terminalIcon')
-        }}
-        style={{
-          ...styles.shared.icon,
-          ...styles.terminalIcon
-        }}
-      />
-      <div
-        id='walletIcon'
-        className='icon'
-        role='button'
-        onClick={() => {
-          console.log('click walletIcon')
-        }}
-        style={{
-          ...styles.shared.icon,
-          ...styles.walletIcon
-        }}
-      />
-      <div
-        id='musicIcon'
-        className='icon'
-        role='button'
-        onClick={() => {
-          console.log('click musicIcon')
-        }}
-        style={{
-          ...styles.shared.icon,
-          ...styles.musicIcon
-        }}
-      />
-      <div
-        id='dishIcon'
-        className='icon'
-        role='button'
-        onClick={() => {
-          actions.toggleDishVisibility()
-        }}
-        style={{
-          ...styles.shared.icon,
-          ...styles.dishIcon
-        }}
-      />
+        className='iconContainer'
+        style={{ ...styles.iconContainer }}
+      >
+        <div style={{ ...styles.iconContainerInner }}>
+          <div
+            id='comIcon'
+            className='icon'
+            role='button'
+            onClick={() => {
+              actions.toggleTerminalVisibility()
+            }}
+            style={{
+              ...styles.shared.icon,
+              ...styles.comIcon
+            }}
+          />
+          <div
+            id='terminalIcon'
+            className='icon'
+            role='button'
+            onClick={() => {
+              console.log('click terminalIcon')
+            }}
+            style={{
+              ...styles.shared.icon,
+              ...styles.terminalIcon
+            }}
+          />
+          <div
+            id='walletIcon'
+            className='icon'
+            role='button'
+            onClick={() => {
+              console.log('click walletIcon')
+            }}
+            style={{
+              ...styles.shared.icon,
+              ...styles.walletIcon
+            }}
+          />
+          <div
+            id='musicIcon'
+            className='icon'
+            role='button'
+            onClick={() => {
+              console.log('click musicIcon')
+            }}
+            style={{
+              ...styles.shared.icon,
+              ...styles.musicIcon
+            }}
+          />
+          <div
+            id='dishIcon'
+            className='icon'
+            role='button'
+            onClick={() => {
+              actions.toggleDishVisibility()
+            }}
+            style={{
+              ...styles.shared.icon,
+              ...styles.dishIcon
+            }}
+          />
+        </div>
+      </div>
     </div>
   )
 }
