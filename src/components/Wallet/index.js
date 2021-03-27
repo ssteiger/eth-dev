@@ -7,17 +7,24 @@ import { mapStateToProps, mapDispatchToProps, reducer } from './controller'
 import './styles.css'
 
 const styles = {
-  position:'fixed',
-  bottom:0,
-  right:'10px',
-  //pointerEvents:'none',
-  height:'450px',
-  width:'303px',
-  background:'url(./assets/trimmed/wallet_trimmed.png)',
-  backgroundSize:'cover',
-  cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
-  imageRendering:'pixelated',
-  zIndex:1050
+  container: {
+    position:'fixed',
+    bottom:0,
+    right:'10px',
+    //pointerEvents:'none',
+    height:'450px',
+    width:'303px',
+    background:'url(./assets/trimmed/wallet_trimmed.png)',
+    backgroundSize:'cover',
+    cursor:'url(https://unpkg.com/nes.css/assets/cursor-click.png), pointer',
+    imageRendering:'pixelated',
+    zIndex:1050
+  },
+  message: {
+    paddingTop:'80px',
+    paddingLeft:'35px',
+    color:'white'
+  }
 }
 
 const Wallet = ({ visible, actions }) => {
@@ -26,6 +33,21 @@ const Wallet = ({ visible, actions }) => {
       console.log('effect done')
     })
   }
+
+  const activateConnectionSearchAnimation = () => {
+    new Typewriter('#wallet > .message', {
+      strings:['Searching for network ...'],
+      cursor:'',
+      autoStart:true,
+      loop:true,
+      delay:90, // delay between each key when typing
+      deleteSpeed:10
+    })
+  }
+
+  useEffect(() => {
+    activateConnectionSearchAnimation()
+  }, [])
 
   useEffect(() => {
     toggleVisibility()
@@ -37,10 +59,15 @@ const Wallet = ({ visible, actions }) => {
       onClick={() => {
         actions.toggleVisibility()
       }}
-      style={{ ...styles }}
+      style={{ ...styles.container }}
     >
-      <div style={{ paddingTop: '80px', paddingLeft: '35px' }}>
-        <span style={{ color: 'white' }}>hello test</span>
+      <div className='message' style={{ ...styles.message }}>
+        <Typist
+          cursor={{ show: false }}
+          avgTypingDelay={50}
+          loop={true}
+        >
+        </Typist>
       </div>
     </div>
   )
